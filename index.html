@@ -183,15 +183,6 @@
   .treat-col.con { color: #B71C1C; }
   .treat-col-title { font-size: 11px; font-weight: 700; margin-bottom: 3px; opacity: 0.7; }
 
-  /* Risk meter */
-  .risk-bar-wrap { margin-top: 6px; }
-  .risk-label { font-size: 10px; color: var(--text-light); margin-bottom: 2px; }
-  .risk-bar { height: 4px; border-radius: 2px; background: rgba(0,0,0,0.08); overflow: hidden; }
-  .risk-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
-  .risk-fill.low { width: 25%; background: #4CAF50; }
-  .risk-fill.med { width: 55%; background: #FF9800; }
-  .risk-fill.high { width: 85%; background: #F44336; }
-
   /* Alternative therapy */
   .alt-section {
     padding: 10px 14px;
@@ -299,6 +290,54 @@
     display: none; align-items: center; justify-content: center; z-index: 99;
   }
   .scroll-top.show { display: flex; }
+
+  /* CATEGORY QUICK FILTERS */
+  .cat-filter-wrap { padding: 16px 20px 0; }
+  .cat-filter-label { font-size: 13px; color: var(--text-light); margin-bottom: 8px; }
+  .cat-filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .cat-btn {
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12.5px; font-weight: 600;
+    border: 1.5px solid var(--border); background: var(--card-bg);
+    color: var(--text-secondary); cursor: pointer;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .cat-btn:active { transform: scale(0.95); }
+  .cat-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+  /* HOT SEARCH TAGS */
+  .hot-tags-wrap { padding: 16px 20px 4px; }
+  .hot-tags-label { font-size: 13px; color: var(--text-light); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+  .hot-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hot-tag {
+    padding: 5px 12px; border-radius: 14px;
+    font-size: 12px; color: var(--teal-dark);
+    background: var(--teal-light); cursor: pointer;
+    transition: all 0.15s; border: none;
+  }
+  .hot-tag:active { transform: scale(0.95); background: var(--teal); color: #fff; }
+
+  /* QA SECTION REDESIGN — always visible */
+  .qa-section-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 0 10px;
+    border-top: 2px solid var(--teal);
+    margin-top: 14px;
+  }
+  .qa-section-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--teal); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .qa-section-title {
+    font-size: 14px; font-weight: 800; color: var(--teal-dark);
+  }
+  .qa-section-sub {
+    font-size: 11px; color: var(--text-light); font-weight: 400;
+  }
 </style>
 </head>
 <body>
@@ -314,8 +353,43 @@
 </div>
 
 <div class="landing" id="landing">
+  <!-- Hot search tags -->
+  <div class="hot-tags-wrap">
+    <div class="hot-tags-label">🔍 快速查詢</div>
+    <div class="hot-tags" id="hotTags">
+      <button class="hot-tag" onclick="quickSearch('膝蓋痛')">膝蓋痛</button>
+      <button class="hot-tag" onclick="quickSearch('糖尿病')">糖尿病</button>
+      <button class="hot-tag" onclick="quickSearch('高血壓')">高血壓</button>
+      <button class="hot-tag" onclick="quickSearch('失眠')">失眠</button>
+      <button class="hot-tag" onclick="quickSearch('感冒')">感冒</button>
+      <button class="hot-tag" onclick="quickSearch('膽固醇')">膽固醇</button>
+      <button class="hot-tag" onclick="quickSearch('白內障')">白內障</button>
+      <button class="hot-tag" onclick="quickSearch('濕疹')">濕疹</button>
+      <button class="hot-tag" onclick="quickSearch('癌症')">癌症</button>
+      <button class="hot-tag" onclick="quickSearch('胃食道逆流')">胃食道逆流</button>
+    </div>
+  </div>
+
+  <!-- Category quick filters -->
+  <div class="cat-filter-wrap">
+    <div class="cat-filter-label">📂 依科別瀏覽</div>
+    <div class="cat-filters" id="catFilters">
+      <button class="cat-btn active" onclick="filterCat('all',this)">全部</button>
+      <button class="cat-btn" onclick="filterCat('心臟',this)">❤️ 心臟</button>
+      <button class="cat-btn" onclick="filterCat('骨科',this)">🦴 骨科</button>
+      <button class="cat-btn" onclick="filterCat('糖尿病',this)">💉 糖尿病</button>
+      <button class="cat-btn" onclick="filterCat('癌症',this)">🎗️ 癌症</button>
+      <button class="cat-btn" onclick="filterCat('腎臟',this)">🫘 腎臟</button>
+      <button class="cat-btn" onclick="filterCat('眼科',this)">👁️ 眼科</button>
+      <button class="cat-btn" onclick="filterCat('精神',this)">🧠 精神</button>
+      <button class="cat-btn" onclick="filterCat('婦產',this)">🤰 婦產</button>
+      <button class="cat-btn" onclick="filterCat('皮膚',this)">🧴 皮膚</button>
+      <button class="cat-btn" onclick="filterCat('腸胃',this)">🔥 腸胃</button>
+    </div>
+  </div>
+
   <div class="section-title">🔥 大家都在問</div>
-  <div class="section-sub">左右滑動，點卡片看治療方式與問診小抄</div>
+  <div class="section-sub">左右滑動，點卡片看詳細治療比較與問診小抄 👉</div>
 
   <div class="carousel-wrap">
     <div class="carousel" id="carousel"></div>
@@ -326,7 +400,7 @@
   <div class="expand-panel" id="expandPanel"></div>
 
   <div class="disclaimer">
-    📋 資料來源：臺北市立聯合醫院 醫病共享決策平台（SDM）<br>
+    📋 資料來源：臺北市立聯合醫院 SDM 平台、衛福部 SDM 國家平台、國健署、各醫學中心衛教資料<br>
     本指南僅供就醫參考，不構成臨床診斷。實際醫療決定請與主治醫師討論。
   </div>
 </div>
@@ -2426,6 +2500,564 @@ const topics = [
       { text: "「醫師，即使管灌提供足夠熱量，病人還是會變瘦嗎？」", why: "末期失智體重下降是疾病自然病程，即使充足熱量仍可能發生" }
     ]
   }
+,
+    {
+      name: "晚期咽喉癌要全喉切除嗎？",
+      icon: "🎗️", iconBg: "#FCE4EC",
+      dept: "耳鼻喉科 · 腫瘤科 · 放射腫瘤科",
+      hotQs: ["晚期咽喉癌一定要全喉切除嗎？","全喉切除後還能說話嗎？","不開刀用放化療效果如何？"],
+      link: "",
+      depts: ["耳鼻喉科","腫瘤科","放射腫瘤科"],
+      treatments: [
+          {"name":"全喉切除手術","risk":"high","pro":"徹底切除腫瘤，降低局部復發","con":"永久失去自然發聲能力，需做氣切造口"},
+          {"name":"器官保留治療（放化療）","risk":"med","pro":"保留喉部結構與發聲功能","con":"治療期間副作用大，仍有復發可能"}
+      ],
+      alts: "化學治療、標靶治療、免疫治療、語言復健、電子喉輔助發聲",
+      questions: [
+          {"text":"「醫師，我的腫瘤分期適合保留喉部嗎？」","why":"確認是否有器官保留的機會"},
+          {"text":"「全喉切除後，有什麼方式可以恢復說話？」","why":"了解術後語言復健選項"},
+          {"text":"「放化療的成功率和副作用分別是什麼？」","why":"評估非手術治療的風險效益"}
+      ]
+    },
+    {
+      name: "新生兒髖關節超音波篩檢要做嗎？",
+      icon: "👶", iconBg: "#E8F5E9",
+      dept: "兒童骨科 · 小兒科",
+      hotQs: ["什麼樣的寶寶需要做髖關節超音波？","篩檢發現異常代表一定有問題嗎？","費用大約多少？"],
+      link: "",
+      depts: ["兒童骨科","小兒科"],
+      treatments: [
+          {"name":"自費超音波篩檢","risk":"low","pro":"早期發現髖關節發育不良，治療效果佳","con":"自費約 800-1500 元，可能有偽陽性造成焦慮"},
+          {"name":"觀察追蹤（不做篩檢）","risk":"low","pro":"無額外花費，大多數寶寶發育正常","con":"若有問題可能延遲發現，晚期治療較複雜"}
+      ],
+      alts: "定期兒童健檢時由醫師理學檢查評估",
+      questions: [
+          {"text":"「醫師，我的寶寶有髖關節發育不良的風險因子嗎？」","why":"確認是否為高風險族群（臀位產、家族史）"},
+          {"text":"「如果篩檢發現異常，後續治療是什麼？」","why":"了解後續處置方案"},
+          {"text":"「不做超音波的話，一般健檢能發現問題嗎？」","why":"評估理學檢查的可靠性"}
+      ]
+    },
+    {
+      name: "大腸直腸扁平型腫瘤切除方式選擇",
+      icon: "🔬", iconBg: "#FFF3E0",
+      dept: "大腸直腸外科 · 消化內科",
+      hotQs: ["EMR 和 ESD 有什麼不同？","我的腫瘤大小適合哪種方式？","術後需要追蹤多久？"],
+      link: "",
+      depts: ["大腸直腸外科","消化內科"],
+      treatments: [
+          {"name":"內視鏡黏膜切除術（EMR）","risk":"low","pro":"手術時間短、恢復快、費用較低","con":"大型腫瘤可能無法一次完整切除"},
+          {"name":"內視鏡粘膜下剝離術（ESD）","risk":"med","pro":"可一次完整切除大型腫瘤，病理判讀完整","con":"手術時間長、穿孔風險較高、需較高技術"}
+      ],
+      alts: "外科手術切除、定期追蹤觀察",
+      questions: [
+          {"text":"「醫師，以我的腫瘤大小和位置，哪種方式比較適合？」","why":"確認最適合的術式"},
+          {"text":"「一次切不乾淨的話怎麼辦？」","why":"了解殘留腫瘤的後續處理"},
+          {"text":"「術後多久要回來做大腸鏡追蹤？」","why":"掌握追蹤時程"}
+      ]
+    },
+    {
+      name: "包皮手術方式選擇",
+      icon: "🩺", iconBg: "#F3E5F5",
+      dept: "泌尿科",
+      hotQs: ["包皮一定要割嗎？","兩種手術方式差在哪？","費用差多少？"],
+      link: "",
+      depts: ["泌尿科"],
+      treatments: [
+          {"name":"傳統包皮環切術","risk":"low","pro":"技術成熟、醫師經驗豐富","con":"手術時間較長、術後較痛、需拆線"},
+          {"name":"一次性包皮環切吻合器","risk":"low","pro":"手術快速（約5-10分鐘）、出血少、外觀較整齊","con":"自費器材費用較高、少數案例吻合器脫落問題"}
+      ],
+      alts: "保守治療（外用類固醇藥膏）、徒手翻開練習",
+      questions: [
+          {"text":"「醫師，我的情況一定需要手術嗎？能先用藥膏試試嗎？」","why":"確認是否有非手術選項"},
+          {"text":"「傳統手術和吻合器的恢復時間差多少？」","why":"評估對日常生活的影響"},
+          {"text":"「術後照護需要注意什麼？」","why":"做好術後準備"}
+      ]
+    },
+    {
+      name: "兒童膀胱輸尿管逆流手術決策",
+      icon: "👶", iconBg: "#E3F2FD",
+      dept: "兒童外科 · 兒童泌尿科",
+      hotQs: ["膀胱輸尿管逆流會自己好嗎？","什麼程度需要開刀？","不開刀會傷腎嗎？"],
+      link: "",
+      depts: ["兒童外科","兒童泌尿科","小兒科"],
+      treatments: [
+          {"name":"手術治療（抗逆流手術）","risk":"med","pro":"根治率高（95%以上），減少反覆泌尿道感染","con":"需全身麻醉、住院、手術風險"},
+          {"name":"保守治療（預防性抗生素）","risk":"low","pro":"避免手術風險，部分兒童會隨成長自行改善","con":"需長期服藥、仍有感染風險、需定期追蹤"}
+      ],
+      alts: "內視鏡注射治療（Deflux）、定期追蹤觀察",
+      questions: [
+          {"text":"「醫師，孩子的逆流是幾級？有機會自然好嗎？」","why":"評估逆流嚴重程度與自癒機率"},
+          {"text":"「長期吃預防性抗生素對孩子有什麼影響？」","why":"了解保守治療的副作用"},
+          {"text":"「如果選擇手術，微創和傳統手術差在哪？」","why":"比較不同術式"}
+      ]
+    },
+    {
+      name: "頭頸癌放療期間灌食管路選擇",
+      icon: "🎗️", iconBg: "#FCE4EC",
+      dept: "耳鼻喉科 · 放射腫瘤科 · 營養科",
+      hotQs: ["頭頸癌放療一定要裝灌食管嗎？","鼻胃管和胃造口哪個比較好？","治療結束後管路可以拔嗎？"],
+      link: "",
+      depts: ["耳鼻喉科","放射腫瘤科","營養科"],
+      treatments: [
+          {"name":"鼻胃管灌食","risk":"low","pro":"置放簡單、不需手術、隨時可移除","con":"外觀不佳、鼻咽不適、容易自行脫落"},
+          {"name":"經皮內視鏡胃造口（PEG）","risk":"med","pro":"外觀隱蔽、舒適度佳、不影響吞嚥復健","con":"需小手術置放、有感染風險、造口護理"}
+      ],
+      alts: "口服營養補充品、靜脈營養",
+      questions: [
+          {"text":"「醫師，我的放療療程預計多久？需要灌食管多長時間？」","why":"評估管路使用期間長短"},
+          {"text":"「胃造口手術的風險和恢復時間？」","why":"了解手術相關資訊"},
+          {"text":"「放療結束後吞嚥功能能恢復到什麼程度？」","why":"評估長期預後"}
+      ]
+    },
+    {
+      name: "生命末期呼吸器撤除決策",
+      icon: "🕊️", iconBg: "#F5F5F5",
+      dept: "安寧緩和科 · 胸腔重症科",
+      hotQs: ["什麼情況下可以考慮撤除呼吸器？","撤管後病人會痛苦嗎？","這樣做合法嗎？"],
+      link: "",
+      depts: ["安寧緩和科","胸腔重症科","家庭醫學科"],
+      treatments: [
+          {"name":"維持呼吸器治療","risk":"med","pro":"延長生命時間，家屬有更多陪伴時間","con":"病人可能承受不適，延長臨終過程"},
+          {"name":"撤除氣管內管（含安寧照護）","risk":"med","pro":"尊重病人意願，減少不必要的痛苦","con":"撤除後可能短時間內離世，家屬心理壓力大"}
+      ],
+      alts: "安寧緩和照護、善終準備、預立醫療決定",
+      questions: [
+          {"text":"「醫師，目前的治療還有改善的可能嗎？」","why":"確認病情是否已不可逆"},
+          {"text":"「撤管過程中會給病人什麼舒適照護？」","why":"了解安寧團隊的配套措施"},
+          {"text":"「家人意見不一致時該怎麼做決定？」","why":"了解決策支持資源"}
+      ]
+    },
+    {
+      name: "脊椎腔狹窄症手術方式選擇",
+      icon: "🦴", iconBg: "#E8EAF6",
+      dept: "骨科 · 神經外科",
+      hotQs: ["脊椎狹窄一定要開刀嗎？","微創和傳統手術差在哪？","術後多久能正常活動？"],
+      link: "",
+      depts: ["骨科","神經外科"],
+      treatments: [
+          {"name":"內視鏡單純減壓手術","risk":"med","pro":"傷口小、恢復快、保留脊椎活動度","con":"嚴重不穩定者不適用、技術要求高"},
+          {"name":"脊椎融合手術","risk":"med","pro":"穩定脊椎結構、適用範圍廣","con":"傷口較大、恢復期長、融合節段失去活動度"}
+      ],
+      alts: "復健治療、硬膜外注射、藥物止痛",
+      questions: [
+          {"text":"「醫師，我的狹窄程度適合微創手術嗎？」","why":"確認是否為微創手術適應症"},
+          {"text":"「融合手術後脊椎活動會受限多少？」","why":"評估對日常生活的影響"},
+          {"text":"「如果先不開刀，有什麼保守治療可以試？」","why":"了解非手術選項"}
+      ]
+    },
+    {
+      name: "減重手術方式選擇",
+      icon: "⚖️", iconBg: "#FFF3E0",
+      dept: "一般外科 · 代謝及減重外科",
+      hotQs: ["BMI多少才能做減重手術？","哪種手術減最多？","手術後飲食要怎麼調整？"],
+      link: "",
+      depts: ["一般外科","代謝及減重外科","營養科"],
+      treatments: [
+          {"name":"腹腔鏡袖狀胃切除術","risk":"med","pro":"手術較簡單、併發症少、不改變消化道路徑","con":"胃酸逆流風險、長期可能復胖"},
+          {"name":"腹腔鏡胃繞道手術","risk":"med","pro":"減重效果最佳、糖尿病改善率高","con":"手術複雜度高、需終身補充維生素、營養不良風險"},
+          {"name":"胃束帶手術","risk":"low","pro":"可逆、手術風險最低","con":"減重效果最差、束帶可能滑脫或感染"}
+      ],
+      alts: "胃內水球、內視鏡縮胃、藥物減重、生活型態調整",
+      questions: [
+          {"text":"「醫師，以我的BMI和共病狀況，哪種手術最適合？」","why":"確認最佳術式"},
+          {"text":"「手術後需要終身吃維他命嗎？」","why":"了解長期營養補充需求"},
+          {"text":"「術後體重反彈的機率有多高？」","why":"評估長期效果"}
+      ]
+    },
+    {
+      name: "根管治療後牙冠修復選擇",
+      icon: "🦷", iconBg: "#FFF8E1",
+      dept: "牙科 · 贗復牙科",
+      hotQs: ["根管治療後一定要做牙套嗎？","牙套材質怎麼選？","不做牙套會怎樣？"],
+      link: "",
+      depts: ["牙科","贗復牙科"],
+      treatments: [
+          {"name":"製作假牙（牙冠/牙套）","risk":"low","pro":"保護剩餘齒質、咬合力強、耐久性佳","con":"需修磨較多齒質、費用較高、需多次就診"},
+          {"name":"複合樹脂填補","risk":"low","pro":"保留較多齒質、費用低、一次完成","con":"強度不如牙冠、大範圍填補容易斷裂"}
+      ],
+      alts: "嵌體/冠蓋體（介於填補與牙冠之間的選擇）",
+      questions: [
+          {"text":"「醫師，我這顆牙剩餘的齒質夠多嗎？可以只做填補嗎？」","why":"評估齒質保留程度"},
+          {"text":"「牙冠材質（全瓷/金屬/混合）各有什麼優缺點？」","why":"了解材質選擇"},
+          {"text":"「做完牙套大概可以用多久？」","why":"評估耐用年限"}
+      ]
+    },
+    {
+      name: "青少年自發性氣胸手術決策",
+      icon: "🌬️", iconBg: "#E3F2FD",
+      dept: "胸腔外科 · 兒童胸腔科",
+      hotQs: ["氣胸會反覆發作嗎？","第一次氣胸就要開刀嗎？","微創手術恢復期多久？"],
+      link: "",
+      depts: ["胸腔外科","兒童胸腔科"],
+      treatments: [
+          {"name":"胸腔鏡手術（VATS）","risk":"med","pro":"降低復發率至5%以下、微創傷口小","con":"全身麻醉風險、術後疼痛、住院數日"},
+          {"name":"保守治療（觀察/引流）","risk":"low","pro":"免手術、恢復快","con":"復發率高（約50%）、反覆發作影響生活"}
+      ],
+      alts: "胸管引流、肋膜沾黏術",
+      questions: [
+          {"text":"「醫師，我孩子這次氣胸的範圍大嗎？」","why":"評估嚴重程度"},
+          {"text":"「如果先不開刀，復發機率有多高？」","why":"了解保守治療的風險"},
+          {"text":"「手術後能正常運動嗎？」","why":"評估對青少年生活的影響"}
+      ]
+    },
+    {
+      name: "癌症末期營養支持選擇",
+      icon: "🕊️", iconBg: "#F5F5F5",
+      dept: "安寧緩和科 · 營養科 · 腫瘤科",
+      hotQs: ["癌末吃不下要打營養針嗎？","不打營養針會餓死嗎？","什麼時候該停止積極營養？"],
+      link: "",
+      depts: ["安寧緩和科","營養科","腫瘤科"],
+      treatments: [
+          {"name":"靜脈營養（打營養針）","risk":"med","pro":"直接補充營養、維持體力","con":"感染風險、水腫、可能延長痛苦而非改善生活品質"},
+          {"name":"經口少量進食+舒適照護","risk":"low","pro":"尊重身體自然過程、減少醫療侵入","con":"家屬可能擔心「餓到病人」"}
+      ],
+      alts: "口服營養補充品、皮下輸液、安寧緩和照護",
+      questions: [
+          {"text":"「醫師，目前打營養針對病情還有幫助嗎？」","why":"確認營養支持的實際效益"},
+          {"text":"「不打營養針的話，病人會不舒服嗎？」","why":"了解身體自然減少進食的過程"},
+          {"text":"「有什麼方式可以讓病人吃得舒服一點？」","why":"尋找舒適進食的方法"}
+      ]
+    },
+    {
+      name: "葛瑞夫茲氏病（甲狀腺亢進）治療選擇",
+      icon: "⚗️", iconBg: "#E8F5E9",
+      dept: "內分泌科 · 新陳代謝科",
+      hotQs: ["甲亢一定要治療嗎？","吃藥能根治嗎？","放射碘安全嗎？"],
+      link: "",
+      depts: ["內分泌科","新陳代謝科","核醫科"],
+      treatments: [
+          {"name":"抗甲狀腺藥物","risk":"low","pro":"非侵入性、可先嘗試、保留甲狀腺功能","con":"需服藥1-2年、復發率40-60%、少數有肝毒性或白血球低下"},
+          {"name":"放射碘治療","risk":"med","pro":"一次治療、成功率高","con":"多數會變成甲狀腺低下需終身補充、孕婦禁用"},
+          {"name":"手術切除甲狀腺","risk":"med","pro":"快速根治、適合大甲狀腺腫","con":"手術風險（聲帶神經損傷）、術後終身補充甲狀腺素"}
+      ],
+      alts: "中醫調理、生活型態調整（減壓、避免碘過量）",
+      questions: [
+          {"text":"「醫師，我的甲亢嚴重程度適合先用藥物控制嗎？」","why":"評估藥物治療的可行性"},
+          {"text":"「放射碘治療後變成甲低的機率有多高？」","why":"了解治療後的長期影響"},
+          {"text":"「我有生育計畫，哪種治療方式比較適合？」","why":"評估對生育的影響"}
+      ]
+    },
+    {
+      name: "乙型主動脈剝離手術選擇",
+      icon: "❤️", iconBg: "#FFEBEE",
+      dept: "心臟血管外科",
+      hotQs: ["主動脈剝離一定要開刀嗎？","微創和傳統手術差在哪？","術後要注意什麼？"],
+      link: "",
+      depts: ["心臟血管外科","心臟內科"],
+      treatments: [
+          {"name":"微創支架手術（TEVAR）","risk":"med","pro":"傷口小、恢復快、手術風險較低","con":"不是所有解剖結構都適用、支架可能需再介入"},
+          {"name":"傳統開胸手術","risk":"high","pro":"適用範圍廣、長期效果佳","con":"手術風險高、恢復期長、併發症多"}
+      ],
+      alts: "藥物控制血壓（穩定型）、混合手術",
+      questions: [
+          {"text":"「醫師，我的剝離範圍適合微創手術嗎？」","why":"確認解剖結構是否適合"},
+          {"text":"「微創手術後需要再次手術的機率？」","why":"了解長期追蹤需求"},
+          {"text":"「術後血壓要控制在多少？」","why":"掌握術後自我照護重點"}
+      ]
+    },
+    {
+      name: "心室期外收縮治療選擇",
+      icon: "❤️", iconBg: "#FFEBEE",
+      dept: "心臟內科",
+      hotQs: ["心臟常常多跳一下需要治療嗎？","電燒手術危險嗎？","吃藥能根治嗎？"],
+      link: "",
+      depts: ["心臟內科"],
+      treatments: [
+          {"name":"藥物治療","risk":"low","pro":"非侵入性、可先嘗試","con":"需長期服藥、可能有副作用、無法根治"},
+          {"name":"電生理燒灼手術（電燒）","risk":"med","pro":"根治率高（80-95%）、免長期服藥","con":"侵入性手術、少數有併發症風險"}
+      ],
+      alts: "生活型態調整（減少咖啡因、壓力管理）、觀察追蹤",
+      questions: [
+          {"text":"「醫師，我的期外收縮頻率算嚴重嗎？」","why":"評估是否需要積極治療"},
+          {"text":"「電燒手術的成功率和風險分別是多少？」","why":"了解手術效益與風險"},
+          {"text":"「如果先不治療，會越來越嚴重嗎？」","why":"評估觀察追蹤的可行性"}
+      ]
+    },
+    {
+      name: "腦部神經膠質母細胞瘤復發手術決策",
+      icon: "🧠", iconBg: "#E8EAF6",
+      dept: "神經外科 · 腫瘤科",
+      hotQs: ["腦瘤復發還能再開刀嗎？","不開刀還有什麼選擇？","預後大概如何？"],
+      link: "",
+      depts: ["神經外科","腫瘤科","放射腫瘤科"],
+      treatments: [
+          {"name":"再次手術切除","risk":"high","pro":"減少腫瘤負荷、可能延長存活","con":"手術風險（神經功能損傷）、腫瘤仍可能再復發"},
+          {"name":"非手術治療（化療/放療/標靶）","risk":"med","pro":"避免手術風險、維持現有神經功能","con":"腫瘤控制效果有限、副作用"}
+      ],
+      alts: "臨床試驗新療法、安寧緩和照護、腫瘤電場治療(TTFields)",
+      questions: [
+          {"text":"「醫師，腫瘤復發的位置適合再次手術嗎？」","why":"確認手術可行性"},
+          {"text":"「再次手術對腦功能的影響會比第一次大嗎？」","why":"評估神經功能風險"},
+          {"text":"「有適合的臨床試驗可以參加嗎？」","why":"了解更多治療選項"}
+      ]
+    },
+    {
+      name: "頭頸部手術化放療期間進食方式選擇",
+      icon: "🎗️", iconBg: "#FCE4EC",
+      dept: "口腔外科 · 耳鼻喉科 · 營養科",
+      hotQs: ["治療期間完全不能吃東西嗎？","鼻胃管和胃造口怎麼選？","營養不夠怎麼辦？"],
+      link: "",
+      depts: ["口腔外科","耳鼻喉科","營養科"],
+      treatments: [
+          {"name":"鼻胃管灌食","risk":"low","pro":"免手術、費用低、隨時可移除","con":"不適感明顯、易脫落、影響外觀"},
+          {"name":"經皮內視鏡胃造口（PEG）","risk":"med","pro":"舒適度佳、穩定供給營養","con":"需小手術、造口感染風險"},
+          {"name":"經口進食（軟質/流質飲食）","risk":"low","pro":"最自然、維持口腔功能","con":"攝取量可能不足、吞嚥困難時有嗆咳風險"}
+      ],
+      alts: "靜脈營養、口服營養補充品",
+      questions: [
+          {"text":"「醫師，我的治療計畫預計會影響進食多久？」","why":"評估營養管路需求時間"},
+          {"text":"「可以邊灌食邊練習吞嚥嗎？」","why":"了解吞嚥復健時機"},
+          {"text":"「治療結束後多久能恢復正常飲食？」","why":"掌握恢復預期"}
+      ]
+    },
+    {
+      name: "癌症化療人工血管選擇",
+      icon: "🎗️", iconBg: "#FCE4EC",
+      dept: "腫瘤科 · 一般外科",
+      hotQs: ["化療一定要裝人工血管嗎？","Port-A和PICC有什麼不同？","裝了能洗澡游泳嗎？"],
+      link: "",
+      depts: ["腫瘤科","一般外科"],
+      treatments: [
+          {"name":"植入式人工血管（Port-A）","risk":"low","pro":"完全埋入皮下、外觀不受影響、可用數年","con":"需小手術植入和移除、有感染或血栓風險"},
+          {"name":"周邊置入中心靜脈導管（PICC）","risk":"low","pro":"植入簡單（從手臂）、免手術","con":"外露管路需每週護理、活動受限、血栓風險稍高"}
+      ],
+      alts: "暫時性中心靜脈導管、周邊靜脈注射（短期化療）",
+      questions: [
+          {"text":"「醫師，我的化療療程需要多久？哪種管路比較適合？」","why":"根據療程長度選擇"},
+          {"text":"「裝了Port-A日常生活需要注意什麼？」","why":"了解照護需求"},
+          {"text":"「化療結束後多久可以移除？」","why":"掌握移除時機"}
+      ]
+    },
+    {
+      name: "新生兒黃疸照光與母乳哺餵",
+      icon: "👶", iconBg: "#FFF8E1",
+      dept: "新生兒科 · 小兒科",
+      hotQs: ["黃疸照光時還能餵母乳嗎？","母乳會讓黃疸更嚴重嗎？","黃疸多高需要照光？"],
+      link: "",
+      depts: ["新生兒科","小兒科"],
+      treatments: [
+          {"name":"照光治療 + 繼續全母乳","risk":"low","pro":"持續提供母乳免疫保護、促進親子連結","con":"黃疸消退可能較慢、需更頻繁監測"},
+          {"name":"照光治療 + 暫時添加配方奶","risk":"low","pro":"增加排便降低膽紅素、黃疸消退較快","con":"可能影響母乳哺餵建立、乳頭混淆風險"}
+      ],
+      alts: "增加母乳親餵頻率、擠乳瓶餵增加奶量",
+      questions: [
+          {"text":"「醫師，寶寶的黃疸指數目前多少？嚴重嗎？」","why":"了解黃疸嚴重程度"},
+          {"text":"「照光期間怎麼維持母乳量？」","why":"確保母乳哺餵不中斷"},
+          {"text":"「大約照光幾天黃疸會降下來？」","why":"掌握治療時程"}
+      ]
+    },
+    {
+      name: "自然產是否選擇減痛分娩？",
+      icon: "🤰", iconBg: "#FCE4EC",
+      dept: "婦產科 · 麻醉科",
+      hotQs: ["減痛分娩安全嗎？","會影響寶寶嗎？","什麼時候打最好？"],
+      link: "",
+      depts: ["婦產科","麻醉科"],
+      treatments: [
+          {"name":"減痛分娩（硬膜外麻醉）","risk":"low","pro":"大幅減輕產痛、媽媽可保持清醒配合生產","con":"可能延長第二產程、少數有頭痛/低血壓/背痛副作用、費用自負"},
+          {"name":"不使用減痛分娩","risk":"low","pro":"免除麻醉風險、產程可能較快、無額外費用","con":"疼痛劇烈可能影響產程配合、產後恢復不一定較快"}
+      ],
+      alts: "非藥物減痛法（拉梅茲呼吸、水中待產、按摩球）",
+      questions: [
+          {"text":"「醫師，我的身體狀況適合減痛分娩嗎？」","why":"確認有無禁忌症（凝血異常、脊椎問題等）"},
+          {"text":"「減痛分娩會增加剖腹產的機率嗎？」","why":"了解對產程的影響"},
+          {"text":"「費用大約多少？健保有給付嗎？」","why":"評估經濟負擔"}
+      ]
+    },
+    {
+      name: "失能病人出院照護模式選擇",
+      icon: "🏠", iconBg: "#E8F5E9",
+      dept: "家庭醫學科 · 社工科 · 長照服務",
+      hotQs: ["怎麼評估適合在家還是去機構？","長照補助怎麼申請？","居家照護需要什麼設備？"],
+      link: "",
+      depts: ["家庭醫學科","社工科","復健科"],
+      treatments: [
+          {"name":"回家照顧（居家照護）","risk":"low","pro":"熟悉環境、家人陪伴、自主性高","con":"照顧者負擔重、需自行安排居家服務、緊急狀況處理不便"},
+          {"name":"入住照護機構","risk":"low","pro":"24小時專業照護、減輕家人負擔","con":"環境適應期、費用較高、家人探視受限"}
+      ],
+      alts: "日間照護中心、居家護理+喘息服務、社區長照據點",
+      questions: [
+          {"text":"「醫師，以目前的照護需求，在家照顧需要哪些支持？」","why":"評估居家照護可行性"},
+          {"text":"「可以申請哪些長照資源或補助？」","why":"了解可用的政府資源"},
+          {"text":"「如果在家照顧，多久需要回診追蹤？」","why":"掌握後續醫療需求"}
+      ]
+    },
+    {
+      name: "過敏性鼻炎中醫治療選擇",
+      icon: "👃", iconBg: "#E8F5E9",
+      dept: "中醫科 · 耳鼻喉科",
+      hotQs: ["過敏性鼻炎能根治嗎？","中醫和西醫可以同時治療嗎？","針灸治鼻炎有效嗎？"],
+      link: "",
+      depts: ["中醫科","耳鼻喉科"],
+      treatments: [
+          {"name":"口服中藥粉","risk":"low","pro":"服用方便、可長期調理體質、健保給付","con":"見效較慢（通常需2-4週）、口感不佳"},
+          {"name":"針灸療法","risk":"low","pro":"即時緩解鼻塞症狀、無藥物副作用","con":"需定期回診、怕針者不適合、健保部分負擔"}
+      ],
+      alts: "西醫抗組織胺/類固醇鼻噴劑、三伏貼、鼻沖洗、環境控制",
+      questions: [
+          {"text":"「醫師，我的過敏鼻炎屬於什麼體質？適合吃藥還是針灸？」","why":"確認中醫體質分型與適合療法"},
+          {"text":"「中藥需要吃多久才會有改善？」","why":"設定合理的治療預期"},
+          {"text":"「針灸治療多久做一次？要做幾次？」","why":"了解治療頻率與療程"}
+      ]
+    },
+    {
+      name: "HIV感染抗病毒藥物選擇",
+      icon: "💊", iconBg: "#F3E5F5",
+      dept: "感染科",
+      hotQs: ["HIV治療後能活多久？","藥物有什麼副作用？","一天吃一顆就好嗎？"],
+      link: "",
+      depts: ["感染科","內科"],
+      treatments: [
+          {"name":"單藥錠合併療法（STR）","risk":"low","pro":"一天一顆、服藥簡便、提高用藥順從性","con":"自費負擔可能較高、藥物交互作用需注意"},
+          {"name":"多藥錠合併療法","risk":"low","pro":"藥物選擇彈性大、可依副作用調整個別成分","con":"一天需服多顆、容易漏藥"}
+      ],
+      alts: "長效針劑（每月或每兩月注射一次）",
+      questions: [
+          {"text":"「醫師，以我的身體狀況，哪種藥物組合最適合？」","why":"確認最佳處方"},
+          {"text":"「單藥錠和多藥錠在療效上有差別嗎？」","why":"比較治療效果"},
+          {"text":"「有長效針劑的選項嗎？」","why":"了解更多治療選擇"}
+      ]
+    },
+    {
+      name: "血壓降不下來怎麼辦？",
+      icon: "🩸", iconBg: "#FFEBEE",
+      dept: "心臟內科 · 家醫科 · 腎臟科",
+      hotQs: ["高血壓一定要吃藥嗎？","降壓藥會傷腎嗎？","量血壓什麼時候量最準？"],
+      link: "",
+      depts: ["心臟內科","家醫科","腎臟科","內科"],
+      treatments: [
+        { name: "生活型態調整（暫不用藥）", risk: "low",
+          pro: "無藥物副作用，減鹽＋運動可降收縮壓 5-10mmHg", con: "需高度自律，嚴重高血壓不適用" },
+        { name: "單一降壓藥物", risk: "low",
+          pro: "每天一顆，5大類藥物可依體質選擇", con: "可能有頭暈、咳嗽（ACEI）等副作用" },
+        { name: "合併用藥（兩種以上）", risk: "med",
+          pro: "降壓效果更強，可降低單藥劑量減少副作用", con: "藥物種類增加，費用略高" }
+      ],
+      alts: "得舒飲食（DASH）、每週150分鐘有氧運動、減重、限鈉限酒、居家血壓監測",
+      questions: [
+        { text: "「醫師，我的血壓多少才算達標？量血壓要注意什麼？」", why: "不同年齡、有無糖尿病腎病的目標值不同，先確認自己的達標數字。" },
+        { text: "「吃降壓藥會不會傷腎或要吃一輩子？如果生活調整有效，可以停藥嗎？」", why: "消除「吃藥傷身」的迷思，了解減藥的條件。" },
+        { text: "「我目前吃的藥如果控制不好，下一步是加藥還是換藥？」", why: "提前了解治療升級策略，配合度會更高。" }
+      ]
+    },
+    {
+      name: "感冒一直好不了？",
+      icon: "🤧", iconBg: "#E3F2FD",
+      dept: "家醫科 · 耳鼻喉科 · 胸腔內科",
+      hotQs: ["感冒需要吃抗生素嗎？","咳嗽超過兩週正常嗎？","小孩感冒要看哪科？"],
+      link: "",
+      depts: ["家醫科","耳鼻喉科","胸腔內科","小兒科"],
+      treatments: [
+        { name: "症狀治療（緩解不適）", risk: "low",
+          pro: "針對症狀用藥（退燒、止咳、鼻塞），多數感冒7-10天自癒", con: "無法縮短病程，僅緩解症狀" },
+        { name: "抗生素治療（細菌感染時）", risk: "med",
+          pro: "針對細菌性併發症（鼻竇炎、中耳炎）有效", con: "一般感冒（病毒性）無效，濫用會產生抗藥性" },
+        { name: "中醫調理", risk: "low",
+          pro: "可改善體質、減少反覆感冒", con: "急性期效果不如西藥快" }
+      ],
+      alts: "多喝水休息、蒸氣吸入、鹽水漱口、蜂蜜（1歲以上）止咳、洗鼻器沖洗",
+      questions: [
+        { text: "「醫師，我這次是一般感冒還是流感？需要做快篩嗎？」", why: "流感有抗病毒藥物（如克流感），48小時內用效果最好。" },
+        { text: "「我咳嗽超過兩週了，需要照X光或做其他檢查嗎？」", why: "久咳可能是氣喘、鼻涕倒流或胃食道逆流，不一定是感冒。" },
+        { text: "「這次需要吃抗生素嗎？還是吃症狀藥就好？」", why: "讓醫師評估是否有細菌感染，避免不必要的抗生素使用。" }
+      ]
+    },
+    {
+      name: "皮膚癢到受不了？",
+      icon: "🧴", iconBg: "#FFF3E0",
+      dept: "皮膚科 · 免疫風濕科",
+      hotQs: ["濕疹能根治嗎？","類固醇藥膏可以長期擦嗎？","異位性皮膚炎和濕疹一樣嗎？"],
+      link: "",
+      depts: ["皮膚科","免疫風濕科","中醫科"],
+      treatments: [
+        { name: "外用類固醇藥膏", risk: "low",
+          pro: "快速止癢消炎，健保給付，是第一線標準治療", con: "長期使用可能造成皮膚變薄，需依部位選擇強度" },
+        { name: "外用免疫調節劑（如普特皮）", risk: "low",
+          pro: "不含類固醇，適合臉部及皮膚皺摺處長期使用", con: "初期可能有灼熱感，價格較高" },
+        { name: "口服免疫調節藥物", risk: "med",
+          pro: "中重度患者可有效控制全身症狀", con: "需定期抽血監測，有感染風險" },
+        { name: "生物製劑注射", risk: "med",
+          pro: "針對中重度異位性皮膚炎療效顯著，可改善生活品質", con: "費用高（需符合健保條件），需定期注射" }
+      ],
+      alts: "保濕修復（每天至少兩次）、避免過敏原、濕敷療法、光照治療、中醫體質調理",
+      questions: [
+        { text: "「醫師，我的皮膚炎屬於哪種類型？嚴重程度如何？」", why: "不同類型（接觸性、異位性、脂漏性）治療策略不同。" },
+        { text: "「類固醇藥膏要擦多久？什麼時候可以換成不含類固醇的？」", why: "了解正確用藥時程，不要怕類固醇而自行停藥導致反彈。" },
+        { text: "「我的狀況有需要考慮口服藥或生物製劑嗎？健保有給付嗎？」", why: "中重度患者有更多選擇，及早討論可避免反覆發作影響生活。" }
+      ]
+    },
+    {
+      name: "焦慮失眠怎麼辦？",
+      icon: "😰", iconBg: "#EDE7F6",
+      dept: "精神科 · 身心科 · 家醫科",
+      hotQs: ["吃安眠藥會上癮嗎？","焦慮和憂鬱怎麼分？","心理諮商健保有給付嗎？"],
+      link: "",
+      depts: ["精神科","身心科","家醫科","臨床心理"],
+      treatments: [
+        { name: "心理治療（認知行為治療）", risk: "low",
+          pro: "長期效果好，無藥物副作用，學會自我調適技巧", con: "需定期回診，見效較慢（約6-12週），費用較高" },
+        { name: "抗憂鬱/抗焦慮藥物（SSRI等）", risk: "med",
+          pro: "健保給付，中重度患者效果明確", con: "初期可能有噁心、頭暈，需服用2-4週才見效" },
+        { name: "短期安眠/鎮靜藥物", risk: "med",
+          pro: "快速緩解失眠與急性焦慮", con: "有依賴風險，不建議長期使用" },
+        { name: "藥物＋心理治療合併", risk: "low",
+          pro: "國際指引建議的最佳方案，復發率最低", con: "需同時配合兩種治療，時間成本較高" }
+      ],
+      alts: "正念冥想、規律運動（每週3次以上）、睡眠衛生調整、放鬆訓練、社會支持團體",
+      questions: [
+        { text: "「醫師，我的狀況需要吃藥嗎？還是先做心理治療就好？」", why: "輕度可先嘗試心理治療，中重度通常建議合併藥物。" },
+        { text: "「這個藥會不會上癮？要吃多久？什麼情況可以減藥或停藥？」", why: "SSRI不會成癮但需漸減，安眠藥才有依賴風險，先問清楚。" },
+        { text: "「除了看診，日常生活我可以做什麼幫助自己改善？」", why: "運動、睡眠習慣、正念練習都有實證效果，醫師可給個人化建議。" }
+      ]
+    },
+    {
+      name: "膽固醇太高要吃藥嗎？",
+      icon: "🫀", iconBg: "#E8F5E9",
+      dept: "心臟內科 · 家醫科 · 新陳代謝科",
+      hotQs: ["膽固醇多少算危險？","Statin副作用大嗎？","靠飲食能降多少？"],
+      link: "",
+      depts: ["心臟內科","家醫科","新陳代謝科"],
+      treatments: [
+        { name: "生活型態調整（暫不用藥）", risk: "low",
+          pro: "飲食調整可降LDL 10-15%，增加運動可升HDL", con: "效果有限，高風險者單靠生活調整不夠" },
+        { name: "Statin類藥物（如立普妥）", risk: "low",
+          pro: "降LDL效果最強（可達30-50%），大幅降低心血管事件風險，健保給付", con: "少數人有肌肉痠痛（5-10%），極少數肝功能異常" },
+        { name: "非Statin藥物（膽固醇吸收抑制劑等）", risk: "low",
+          pro: "可與Statin合用加強效果，或Statin不耐受時替代", con: "單用效果不如Statin強，可能腹瀉" },
+        { name: "PCSK9抑制劑注射", risk: "low",
+          pro: "可降LDL 50-70%，適合極高風險或Statin無法達標者", con: "費用高，需每2-4週皮下注射，健保條件嚴格" }
+      ],
+      alts: "地中海飲食、增加水溶性纖維攝取、每週150分鐘中等強度運動、戒菸、紅麴（需注意品質）",
+      questions: [
+        { text: "「醫師，以我的膽固醇數值和其他風險因子，LDL目標應該降到多少？」", why: "有無糖尿病、心血管病史會影響目標值，不是每個人都一樣。" },
+        { text: "「如果要吃Statin，肌肉痠痛的機率高嗎？發生了怎麼辦？」", why: "Statin肌肉副作用是最常見的顧慮，90%可透過換藥或減量解決。" },
+        { text: "「我可以先靠飲食運動試三個月嗎？如果不夠再吃藥？」", why: "低風險者可以嘗試，但高風險者拖延用藥反而危險，讓醫師判斷。" }
+      ]
+    },
+    {
+      name: "火燒心好不了？",
+      icon: "🔥", iconBg: "#FFF3E0",
+      dept: "肝膽腸胃科 · 家醫科",
+      hotQs: ["胃食道逆流能根治嗎？","胃藥要吃多久？","長期吃PPI會怎樣？"],
+      link: "",
+      depts: ["肝膽腸胃科","家醫科","外科"],
+      treatments: [
+        { name: "生活型態調整", risk: "low",
+          pro: "無副作用，減重＋睡前3小時不進食＋左側臥可有效減少逆流", con: "需長期維持，嚴重者單靠調整不夠" },
+        { name: "制酸劑／H2受體拮抗劑", risk: "low",
+          pro: "藥局可買，快速中和胃酸緩解不適", con: "效果短暫，僅適合偶發輕症" },
+        { name: "質子幫浦抑制劑（PPI）", risk: "low",
+          pro: "第一線標準用藥，抑酸效果最強，4-8週療程可癒合食道炎", con: "長期使用可能增加骨鬆、腸道感染風險，建議用最低有效劑量" },
+        { name: "抗逆流手術／內視鏡治療", risk: "med",
+          pro: "可根治，減少長期藥物依賴，成功率80-90%", con: "有手術風險，少數術後脹氣或吞嚥困難" }
+      ],
+      alts: "睡前墊高床頭15-20cm、避免咖啡酒精巧克力油炸食物、戒菸、少量多餐、穿寬鬆衣物、藻膠酸類藥物",
+      questions: [
+        { text: "「醫師，我需要做胃鏡嗎？我的食道有沒有發炎或病變？」", why: "確認嚴重度（ABCD分級），有無巴乙氏食道等癌前病變。" },
+        { text: "「胃藥（PPI）要吃多久？長期吃會有什麼風險？可以自己停嗎？」", why: "PPI通常療程4-8週，長期使用有骨鬆風險，不要自行突然停藥以免反彈。" },
+        { text: "「如果吃藥效果不好，有沒有手術或內視鏡的治療選項？」", why: "藥物難治型（refractory GERD）可考慮腹腔鏡胃底摺疊術或內視鏡治療。" }
+      ]
+    }
 ];
 
 // All PDAs for search
@@ -2527,7 +3159,66 @@ const allPdas = [
   { cat:"神經", icon:"🧠", bg:"#EDE7F6", title:"慢性偏頭痛治療選擇", link:"", kw:"慢性偏頭痛 三叉神經痛 肉毒桿菌素 神經阻斷手術 頭痛 CGRP 恩疼停 偏頭痛", topicIdx:65 },
   { cat:"家醫", icon:"🏥", bg:"#E8F5E9", title:"高齡衰弱病人出院照護選擇", link:"", kw:"高齡 衰弱 出院照護 PAC 急性後期照護 長照 機構 復健 失能 老人", topicIdx:66 },
   { cat:"內分泌", icon:"💉", bg:"#E8F5E9", title:"第二型糖尿病胰島素治療", link:"", kw:"第二型糖尿病 胰島素 血糖 糖化血色素 低血糖 口服降血糖藥 糖尿病 注射", topicIdx:67 },
-  { cat:"皮膚", icon:"🩹", bg:"#FFF3E0", title:"傷口敷料選擇", link:"", kw:"傷口 敷料 換藥 銀離子 紗布 擦傷 燒燙傷 糖尿病足 壓瘡 傷口照護", topicIdx:68 }
+  { cat:"皮膚", icon:"🩹", bg:"#FFF3E0", title:"傷口敷料選擇", link:"", kw:"傷口 敷料 換藥 銀離子 紗布 擦傷 燒燙傷 糖尿病足 壓瘡 傷口照護", topicIdx:68 },
+    {cat:"骨科",icon:"🦴",bg:"#E8EAF6",title:"【衛福部】治療退化性關節炎我該接受人工膝關節置換手術嗎？",link:"",kw:"治療退化性關節炎我該接受人工膝關節置換手術嗎？ 醫病共享決策推廣計畫-骨科工作小組 肌肉骨骼系統",topicIdx:0},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】晚期咽喉癌要接受全喉切除手術嗎？",link:"",kw:"咽喉癌 喉癌 全喉切除 耳鼻喉 頭頸癌",topicIdx:97},
+    {cat:"骨科",icon:"🦴",bg:"#E8EAF6",title:"【衛福部】我的寶寶要不要做自費新生兒髖關節超音波篩檢",link:"",kw:"新生兒 髖關節 超音波 篩檢 寶寶 發育不良",topicIdx:98},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】「餵」我自己做決定：當我失智變嚴重時是否要進行人工灌食？",link:"",kw:"「餵」我自己做決定：當我失智變嚴重時是否要進行人工灌食？ 臺北榮民總醫院神經內科 消化系統",topicIdx:96},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】我有大於兩公分的大腸直腸扁平型良性腫瘤，該選擇內視鏡黏膜切除(EMR)或內視鏡粘膜下剝離術(ESD)",link:"",kw:"大腸 直腸 扁平型腫瘤 EMR ESD 內視鏡 息肉",topicIdx:99},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】長期需要管路灌食，除了使用鼻胃管，還有什麼灌食方式可以選擇？",link:"",kw:"長期需要管路灌食，除了使用鼻胃管，還有什麼灌食方式可以選擇？ 佛教慈濟醫療財團法人大林慈濟醫院 消化系統",topicIdx:25},
+    {cat:"胸腔科",icon:"🌬️",bg:"#E3F2FD",title:"【衛福部】我或家人面對呼吸衰竭插管卻拔管困難的時候，該接受氣切手術嗎？",link:"",kw:"我或家人面對呼吸衰竭插管卻拔管困難的時候，該接受氣切手術嗎？ 高雄榮民總醫院重症加護醫學內科 呼吸系統",topicIdx:21},
+    {cat:"胸腔科",icon:"🌬️",bg:"#E3F2FD",title:"【衛福部】短期內無法脫離呼吸器的病人要不要接受氣管造口術",link:"",kw:"短期內無法脫離呼吸器的病人要不要接受氣管造口術 醫病共享決策推廣計畫-氣切工作小組 呼吸系統",topicIdx:21},
+    {cat:"泌尿科",icon:"🩺",bg:"#F3E5F5",title:"【衛福部】包皮手術的選擇:傳統包皮環切術或是一次性包皮環切吻合器?",link:"",kw:"包皮 環切 割包皮 包莖 吻合器 泌尿",topicIdx:100},
+    {cat:"泌尿科",icon:"🩺",bg:"#F3E5F5",title:"【衛福部】轉移性攝護腺癌賀爾蒙治療失效後的藥物選擇",link:"",kw:"轉移性攝護腺癌賀爾蒙治療失效後的藥物選擇 高雄榮民總醫院 泌尿生殖系統",topicIdx:51},
+    {cat:"泌尿科",icon:"🩺",bg:"#F3E5F5",title:"【衛福部】兒童膀胱輸尿管逆流需要手術嗎?",link:"",kw:"膀胱 輸尿管 逆流 兒童 泌尿道感染 VUR",topicIdx:101},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】我有心房顫動，應該服用抗凝血劑預防中風嗎？",link:"",kw:"我有心房顫動，應該服用抗凝血劑預防中風嗎？ 醫病共享決策推廣計畫-心房顫動工作小組 循環系統",topicIdx:63},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】我有重度主動脈瓣狹窄，該接受經導管主動脈瓣膜置換手術嗎?",link:"",kw:"我有重度主動脈瓣狹窄，該接受經導管主動脈瓣膜置換手術嗎? 振興醫療財團法人振興醫院 循環系統",topicIdx:10},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】我有穩定性心絞痛需不需要接受心導管治療？",link:"",kw:"我有穩定性心絞痛需不需要接受心導管治療？ 醫病共享決策推廣計畫-心絞痛工作小組 循環系統",topicIdx:11},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】醫生說我有心房纖維顫動需要服用抗凝血劑預防中風，我應該如何選擇？",link:"",kw:"醫生說我有心房纖維顫動需要服用抗凝血劑預防中風，我應該如何選擇？ 馬偕紀念醫院心臟內科 循環系統",topicIdx:63},
+    {cat:"神經科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】我有糖尿病黃斑部水腫病變，該接受何種治療?",link:"",kw:"我有糖尿病黃斑部水腫病變，該接受何種治療? 醫病共享決策推廣計畫-糖尿病眼科疾病工作小組 神經系統及感官器官",topicIdx:83},
+    {cat:"神經科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】我的親人面臨嚴重腦部損傷，經過急性期全力治療後有什麼選擇?",link:"",kw:"我的親人面臨嚴重腦部損傷，經過急性期全力治療後有什麼選擇? 醫病共享決策推廣計畫-ICU生命末期照護工作小組 神經系統及感官器官",topicIdx:19},
+    {cat:"皮膚科",icon:"🩹",bg:"#FFF8E1",title:"【衛福部】孩童顏面撕裂傷，我該選擇何種縫合方式？",link:"",kw:"孩童顏面撕裂傷，我該選擇何種縫合方式？ 新光吳火獅紀念醫院 皮膚系統與皮下組織",topicIdx:44},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】我有一顆3公分以下肝腫瘤(肝癌)，該選擇怎麼樣的治療?",link:"",kw:"我有一顆3公分以下肝腫瘤(肝癌)，該選擇怎麼樣的治療? 馬偕紀念醫院胃腸肝膽科 腫瘤",topicIdx:78},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】頭頸癌病人執行放射性治療期間，該接受何種灌食管路？",link:"",kw:"頭頸癌 放射治療 灌食 鼻胃管 胃造口 PEG 營養",topicIdx:102},
+    {cat:"婦產科",icon:"🤰",bg:"#FCE4EC",title:"【衛福部】我有生產風險，該如何選擇生產方式?",link:"",kw:"我有生產風險，該如何選擇生產方式? 醫病共享決策推廣計畫-產科工作小組 妊娠、生產與產褥期",topicIdx:22},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】我的親人處於呼吸器使用之生命末期階段，是否選擇撤除氣管內管？",link:"",kw:"呼吸器 撤除 拔管 生命末期 安寧 DNR 善終",topicIdx:103},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】新生兒處於生命末期~我的選擇是什麼?",link:"",kw:"新生兒處於生命末期~我的選擇是什麼? 馬偕兒童醫院新生兒加護病房 其他",topicIdx:48},
+    {cat:"骨科",icon:"🦴",bg:"#E8EAF6",title:"【衛福部】我有神經症狀的脊椎腔狹窄症，我該選擇內視鏡單純減壓手術或脊椎融合手術",link:"",kw:"脊椎 狹窄 椎管狹窄 減壓 融合 內視鏡 背痛 腳麻",topicIdx:104},
+    {cat:"骨科",icon:"🦴",bg:"#E8EAF6",title:"【衛福部】保骨大作戰，我需要接受骨質疏鬆症治療嗎?",link:"",kw:"保骨大作戰，我需要接受骨質疏鬆症治療嗎? 義大醫院家庭暨社區醫學部 肌肉骨骼系統",topicIdx:9},
+    {cat:"骨科",icon:"🦴",bg:"#E8EAF6",title:"【衛福部】慢性下背痛如果不開刀我該怎麼辦?-以影像引導神經阻斷術為例",link:"",kw:"慢性下背痛如果不開刀我該怎麼辦?-以影像引導神經阻斷術為例 國立成功大學醫學院附設醫院麻醉部 肌肉骨骼系統",topicIdx:81},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】我需要接受減重手術，除了胃束帶手術外，還有其他手術選擇嗎？",link:"",kw:"減重 手術 袖狀胃 胃繞道 胃束帶 肥胖 BMI 代謝",topicIdx:105},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】急性闌尾炎需手術病患該選擇傳統闌尾切除手術或腹腔鏡闌尾切除手術",link:"",kw:"急性闌尾炎需手術病患該選擇傳統闌尾切除手術或腹腔鏡闌尾切除手術 臺北市立聯合醫院仁愛院區 消化系統",topicIdx:74},
+    {cat:"消化內科",icon:"🫁",bg:"#FFF3E0",title:"【衛福部】根管治療後應選擇製作假牙(牙冠/牙套)或複合樹脂填補?",link:"",kw:"根管 牙套 牙冠 假牙 樹脂 填補 抽神經",topicIdx:106},
+    {cat:"胸腔科",icon:"🌬️",bg:"#E3F2FD",title:"【衛福部】肺炎的預防：我該接受肺炎鏈球菌疫苗注射嗎？",link:"",kw:"肺炎的預防：我該接受肺炎鏈球菌疫苗注射嗎？ 義大醫療財團法人義大醫院 呼吸系統",topicIdx:55},
+    {cat:"胸腔科",icon:"🌬️",bg:"#E3F2FD",title:"【衛福部】青少年第一次大範圍自發性氣胸發病是否需接受胸腔鏡手術?",link:"",kw:"氣胸 自發性氣胸 青少年 胸腔鏡 VATS 肺泡",topicIdx:107},
+    {cat:"泌尿科",icon:"🩺",bg:"#F3E5F5",title:"【衛福部】攝護腺肥大的手術~我該如何選擇?",link:"",kw:"攝護腺肥大的手術~我該如何選擇? 雲林長庚紀念醫院泌尿外科 泌尿生殖系統",topicIdx:42},
+    {cat:"內分泌科",icon:"⚗️",bg:"#E8F5E9",title:"【衛福部】我/我的家人癌症末期進食減少時，需要打營養針嗎？",link:"",kw:"癌症末期 營養針 TPN 進食 安寧 臨終 營養",topicIdx:108},
+    {cat:"內分泌科",icon:"⚗️",bg:"#E8F5E9",title:"【衛福部】我有葛瑞夫茲氏病，我該選擇何種治療方式？",link:"",kw:"甲狀腺 甲亢 葛瑞夫茲 Graves 甲狀腺亢進 放射碘 心悸 手抖",topicIdx:109},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】乙型主動脈剝離手術治療，我該選擇微創手術還是傳統手術比較適合？",link:"",kw:"主動脈剝離 乙型 B型 TEVAR 支架 開胸 血管外科",topicIdx:110},
+    {cat:"心臟科",icon:"❤️",bg:"#FFEBEE",title:"【衛福部】我是有症狀的心室期外收縮病患，是否該接受藥物治療或電生理燒灼手術治療?",link:"",kw:"心室 期外收縮 早搏 電燒 電生理 心律不整 心悸",topicIdx:111},
+    {cat:"神經科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】腦部神經膠質母細胞瘤局部復發病人是否再次接受手術",link:"",kw:"膠質母細胞瘤 GBM 腦瘤 復發 神經外科 腦癌",topicIdx:112},
+    {cat:"神經科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】頸部椎間盤疾病面臨開刀時：我該選擇椎間盤融合術或人工椎間盤置換術？",link:"",kw:"頸部椎間盤疾病面臨開刀時：我該選擇椎間盤融合術或人工椎間盤置換術？ 佳里奇美醫院 神經系統及感官器官",topicIdx:28},
+    {cat:"精神科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】我有思覺失調症，病情一再復發，我該選口服或長效針劑藥物？",link:"",kw:"我有思覺失調症，病情一再復發，我該選口服或長效針劑藥物？ 三軍總醫院精神醫學部 精神與行為",topicIdx:88},
+    {cat:"精神科",icon:"🧠",bg:"#E8EAF6",title:"【衛福部】我有思覺失調症，該接受長效針劑藥物治療嗎?",link:"",kw:"我有思覺失調症，該接受長效針劑藥物治療嗎? 秀傳紀念醫院精神醫學部 精神與行為",topicIdx:88},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】早期乳癌的輔助性放射治療選擇",link:"",kw:"早期乳癌的輔助性放射治療選擇 亞東紀念醫院放射腫瘤科 腫瘤",topicIdx:53},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】即將接受頭頸部手術、化學及放射線治療的我，適合哪種進食方式呢？",link:"",kw:"頭頸部 口腔癌 化療 放療 灌食 進食 吞嚥 營養",topicIdx:113},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】我有乳癌，我應該先化療再手術、或先手術再化療?",link:"",kw:"我有乳癌，我應該先化療再手術、或先手術再化療? 國立成功大學醫學院附設醫院 腫瘤",topicIdx:14},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】面對早期乳癌術後放射治療，我有甚麼選擇?",link:"",kw:"面對早期乳癌術後放射治療，我有甚麼選擇? 彰化基督教醫院放射腫瘤部 腫瘤",topicIdx:53},
+    {cat:"腫瘤科",icon:"🎗️",bg:"#FCE4EC",title:"【衛福部】癌症病人接受化學治療，有哪種人工血管可以選擇？",link:"",kw:"人工血管 Port-A PICC 化療 化學治療 靜脈 導管 癌症",topicIdx:114},
+    {cat:"婦產科",icon:"🤰",bg:"#FCE4EC",title:"【衛福部】我的寶寶有黃疸需接受照光治療，我可以繼續全母乳哺餵嗎",link:"",kw:"新生兒 黃疸 照光 母乳 哺餵 膽紅素 寶寶",topicIdx:115},
+    {cat:"婦產科",icon:"🤰",bg:"#FCE4EC",title:"【衛福部】我預計要自然生產，該不該選擇減痛分娩呢?",link:"",kw:"減痛分娩 無痛分娩 硬膜外 自然產 產痛 生產 麻醉",topicIdx:116},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】末期病人準備出院了，他/她適合回家照顧、入住機構，還是轉到其他醫院？",link:"",kw:"末期病人準備出院了，他/她適合回家照顧、入住機構，還是轉到其他醫院？ 臺北榮民總醫院安寧療護科 其他",topicIdx:66},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】我的家人是失能病人出院需有人照顧，我要選擇回家照顧還是機構照顧？",link:"",kw:"失能 出院 照護 居家 機構 長照 看護 照顧者",topicIdx:117},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】我是過敏性鼻炎的病人，想改善症狀，該選擇「口服中藥粉」還是「針灸療法」?",link:"",kw:"過敏性鼻炎 鼻炎 過敏 中醫 針灸 中藥 鼻塞 打噴嚏 流鼻水",topicIdx:118},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】洗腎血管常常塞？該選支架？或重開？",link:"",kw:"洗腎血管常常塞？該選支架？或重開？ 國立臺灣大學醫學院附設醫院新竹分院 其他",topicIdx:26},
+    {cat:"綜合",icon:"📋",bg:"#F5F5F5",title:"【衛福部】感染愛滋病毒後，我該選擇哪種單藥錠Single Tablet Regimen(STR)治療？",link:"",kw:"HIV 愛滋 抗病毒 STR 單藥錠 感染 免疫",topicIdx:119},
+    {cat:"心血管",icon:"🩸",bg:"#FFEBEE",title:"高血壓治療：生活調整還是吃藥？",link:"",kw:"高血壓 血壓 降壓藥 心血管 頭暈 DASH",topicIdx:120},
+    {cat:"家醫科",icon:"🤧",bg:"#E3F2FD",title:"感冒/急性上呼吸道感染的處理",link:"",kw:"感冒 咳嗽 流鼻水 發燒 上呼吸道感染 喉嚨痛 流感",topicIdx:121},
+    {cat:"皮膚科",icon:"🧴",bg:"#FFF3E0",title:"皮膚炎/濕疹/異位性皮膚炎治療選擇",link:"",kw:"濕疹 皮膚炎 異位性皮膚炎 癢 類固醇 皮膚過敏 蕁麻疹 皮膚癢",topicIdx:122},
+    {cat:"精神科",icon:"😰",bg:"#EDE7F6",title:"焦慮/憂鬱症/失眠的治療選擇",link:"",kw:"焦慮 憂鬱 失眠 安眠藥 抗憂鬱 身心科 恐慌 壓力 睡不著",topicIdx:123},
+    {cat:"心血管",icon:"🫀",bg:"#E8F5E9",title:"高血脂/膽固醇過高的治療選擇",link:"",kw:"膽固醇 高血脂 三酸甘油脂 LDL HDL statin 降血脂",topicIdx:124},
+    {cat:"腸胃科",icon:"🔥",bg:"#FFF3E0",title:"胃食道逆流（火燒心）的治療選擇",link:"",kw:"胃食道逆流 火燒心 GERD 胃酸 逆流 PPI 胃藥 食道炎 溢酸",topicIdx:125}
+
 ];
 
 // ===== STATE =====
@@ -2610,9 +3301,6 @@ function renderExpand(t) {
                 ✗ ${tr.con}
               </div>
             </div>
-            <div class="risk-bar-wrap">
-              <div class="risk-bar"><div class="risk-fill ${tr.risk}"></div></div>
-            </div>
           </div>
         `).join("")}
       </div>
@@ -2621,11 +3309,14 @@ function renderExpand(t) {
         <strong>🌿 非手術／替代療法：</strong>${t.alts}
       </div>
 
-      <div class="qa-toggle" onclick="toggleQA(this)">
-        <span>✂️ 帶去診間照著問（${t.questions.length} 題）</span>
-        <span class="qa-toggle-arrow">›</span>
+      <div class="qa-section-header">
+        <div class="qa-section-icon">✂️</div>
+        <div>
+          <div class="qa-section-title">帶去診間照著問（${t.questions.length} 題）</div>
+          <div class="qa-section-sub">截圖或存起來，看診時直接照著問</div>
+        </div>
       </div>
-      <div class="qa-list">
+      <div class="qa-list open">
         ${t.questions.map((q, qi) => `
           <div class="qa-item">
             <div class="qa-num">${qi+1}</div>
@@ -2635,7 +3326,7 @@ function renderExpand(t) {
         `).join("")}
       </div>
 
-      <a class="pda-link" href="${t.link}" target="_blank" rel="noopener">📄 查看官方完整決策輔助表 →</a>
+      ${t.link ? '<a class="pda-link" href="'+t.link+'" target="_blank" rel="noopener">📄 查看官方完整決策輔助表 →</a>' : ''}
     </div>
   `;
 }
@@ -2715,6 +3406,66 @@ function hlText(text, terms) {
 window.addEventListener("scroll", () => {
   document.getElementById("scrollTop").classList.toggle("show", window.scrollY > 400);
 });
+
+// Quick search from hot tags
+function quickSearch(term) {
+  const input = document.getElementById("searchInput");
+  input.value = term;
+  document.getElementById("searchClear").classList.add("show");
+  doSearch(term);
+  input.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+// Category filter
+function filterCat(cat, btn) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  if (cat === 'all') {
+    quickSearch('');
+    document.getElementById("searchInput").value = '';
+    document.getElementById("searchClear").classList.remove("show");
+    document.getElementById("landing").classList.remove("hide");
+    document.getElementById("searchResults").classList.remove("show");
+    document.getElementById("emptyState").classList.remove("show");
+    return;
+  }
+  // Map category button labels to search terms
+  const catMap = {
+    '心臟': '心臟 心房 心絞 心血管 高血壓 血壓',
+    '骨科': '骨科 膝蓋 脊椎 關節 骨折 骨質',
+    '糖尿病': '糖尿病 血糖 胰島素',
+    '癌症': '癌 腫瘤 乳癌 肺癌 大腸癌',
+    '腎臟': '腎臟 洗腎 透析',
+    '眼科': '眼 白內障 青光眼 視網膜',
+    '精神': '精神 憂鬱 焦慮 失眠 思覺',
+    '婦產': '婦 產 子宮 卵巢 分娩',
+    '皮膚': '皮膚 濕疹 皮膚炎',
+    '腸胃': '胃食道逆流 腸胃 消化 胃酸 火燒心'
+  };
+  const terms = catMap[cat] || cat;
+  const input = document.getElementById("searchInput");
+  input.value = cat;
+  document.getElementById("searchClear").classList.add("show");
+  // Custom multi-term search
+  const landing = document.getElementById("landing");
+  const results = document.getElementById("searchResults");
+  const empty = document.getElementById("emptyState");
+  landing.classList.add("hide");
+  const searchTerms = terms.toLowerCase().split(/\s+/);
+  const matched = allPdas.filter(p => {
+    const hay = (p.title + " " + p.kw + " " + p.cat).toLowerCase();
+    return searchTerms.some(t => hay.includes(t));
+  });
+  if (!matched.length) { results.classList.remove("show"); empty.classList.add("show"); return; }
+  empty.classList.remove("show");
+  results.classList.add("show");
+  let html = '<div class="sr-header">找到 ' + matched.length + ' 筆「' + cat + '」相關結果</div>';
+  matched.forEach(function(p) {
+    const hasDetail = p.topicIdx !== undefined;
+    html += '<div class="sr-card"><a class="sr-link" href="' + (hasDetail ? 'javascript:void(0)' : p.link) + '"' + (hasDetail ? ' onclick="openSearchTopic(' + p.topicIdx + ')"' : ' target="_blank" rel="noopener"') + '><div class="sr-badge" style="background:' + p.bg + '">' + p.icon + '</div><div class="sr-info"><div class="sr-title">' + p.title + '</div><div class="sr-cat">' + p.cat + (hasDetail ? ' · 有完整小抄' : '') + '</div></div><span class="sr-arrow">' + (hasDetail ? '▼' : '→') + '</span></a></div>';
+  });
+  results.innerHTML = html;
+}
 
 // INIT
 renderCarousel();
